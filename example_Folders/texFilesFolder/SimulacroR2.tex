@@ -1,0 +1,102 @@
+% -----  ejemplo de letra de prueba ----
+\documentclass{pruebas}
+
+% para archivos utf8
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage{libertine}
+\usepackage{wrapfig}
+
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{setspace}
+\usepackage{caption}
+
+\setlength\parindent{0pt}
+
+\usepackage{draftwatermark}
+\SetWatermarkScale{0.5}
+\SetWatermarkText{Example Test}
+
+\graphicspath{{./figs/}}
+
+\usepackage{tikz}
+\usepackage{float}
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+		\node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
+\newcommand{\emptybox}[2][\textwidth]{%
+	\begingroup
+	\setlength{\fboxsep}{-\fboxrule}%
+	\noindent\framebox[#1]{\rule{0pt}{#2}}%
+	\endgroup
+}
+
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Simulacro Primer Parcial}
+\rhead{Página: \thepage}
+
+% ---------------------
+
+\input{problemsParams.tex}
+
+\usepackage{tcolorbox}
+
+\newtcolorbox{mybox}[3][]
+{
+	colframe = #2!80,
+	colback  = #2!20,
+	coltitle = white,  
+	title    = {#3},
+	#1,
+}
+
+
+\usepackage{lipsum}
+
+
+\begin{document}
+	
+	\begin{minipage}[t]{0.85\textwidth}
+		%			\vspace{-1mm}%
+		%
+		\noindent%
+		Unidad Curricular Resistencia de Materiales 2 - Cód. 1312\\
+		\textbf{Simulacro Primer Parcial} -- curso 2020\\
+		Instituto de Estructuras y Transporte\\
+		Facultad de Ingeniería, Universidad de la República\\
+	\end{minipage}
+	\begin{minipage}[t]{0.1\textwidth}
+		\vspace{-5mm}%
+		\includegraphics[width=.9\textwidth]{logo_udelar} % .21
+	\end{minipage}
+	
+	\vspace{5mm}
+	
+	\begin{mybox}{red}{Antes de comenzar a leer, por favor,  \textbf{verifique sus datos personales}}
+		%
+		\begin{footnotesize}
+			\begin{itemize}
+				\item Nombre completo: \textbf{ \nombres \, \apellidos}
+			\end{itemize}
+		\end{footnotesize}
+		%
+	\end{mybox}
+	
+%	\vspace{5mm}
+%	
+%	\hrule
+	\vspace{4mm}
+	
+\input{LetraEj1Simulacro.tex}		
+	
+	\newpage
+	
+\input{LetraEj2Simulacro.tex}		
+	
+\end{document}
