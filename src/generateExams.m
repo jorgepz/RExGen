@@ -49,22 +49,24 @@ function generateExams( testStrings, paramRanges, outputFolder )
     surnameLabel = strrep( strrep( surnames{i,1} , " ", "-" ),"'","-" ) ;
     nameLabel    = strrep( strrep( names{i,1}    , " ", "-" ),"'","-" ) ;
 
-    fprintf( [ '  ' sprintf('%3i ', i) ' - ' surnameLabel '...'] )         ;
+    fprintf( sprintf( '  %3i - %s ', i, surnameLabel ) ) ;
+    
     testFilename = sprintf( '%s_%03i_%s.pdf', testLabel, i, surnameLabel ) ;
     % ------------------
-    
+
+        
     % --- writes parameters file ---
-    writeParamsFile( paramRanges, nameLabel, surnameLabel, IDs{i,1} ) ;
+    fprintf( fplanillaVals, '%03i', i );
+    writeParamsFile( paramRanges, nameLabel, surnameLabel, IDs{i,1}, fplanillaVals ) ;
+    fprintf( fplanillaVals, '\n' );
     % ----------------------------
-    
-    %~ fprintf( fplanillaVals, '%03i,%g,%g,%g,%g,%g,%g,%g\n', i, ejUnovalorA , ejUnovalorL, ejUnovalorP, ejDosvalorI, ejDosvalorL, ejDosvalorq, ejDosvalorP );
 
     % generates and rename file
     [status, output] = system( [ 'pdflatex ' testLabel '.tex' ] );
     [status, output] = system( [ 'mv ' testLabel '.pdf ' currFolder '/' outputFolder testFilename ] ) ;
     
     % termina generacion de esta letra
-    fprintf( [ 'hecho\n'] ) ;
+    fprintf( [ ' done\n'] ) ;
   
   end
   

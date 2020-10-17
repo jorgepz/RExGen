@@ -15,7 +15,7 @@
 % You should have received a copy of the GNU General Public License
 % along with RandExam.  If not, see <https://www.gnu.org/licenses/>.
 
-function writeParamsFile( paramRanges, nameLabel, surnameLabel, id )
+function writeParamsFile( paramRanges, nameLabel, surnameLabel, id, fplanillaVals )
 
   fparamsLetra = fopen( 'problemsParams.tex', 'w' ); 
 
@@ -33,6 +33,10 @@ function writeParamsFile( paramRanges, nameLabel, surnameLabel, id )
     valsSet = ( paramRanges.iniVal{i} : paramRanges.deltas{i} : paramRanges.endVal{i} )' ;
     
     chosenVal = valsSet( randi( length( valsSet ) ) ) ;
+
+    % writes chosen value to output text file
+    fprintf( fplanillaVals, ',%g', chosenVal );
+
     
     % write line  
     fprintf( fparamsLetra, [ '\\newcommand{\\' paramRanges.names{i} '}{%g}\n'], chosenVal ) ;

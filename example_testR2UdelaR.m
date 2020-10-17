@@ -16,32 +16,27 @@
 % along with RandExam.  If not, see <https://www.gnu.org/licenses/>.
 
 % auxiliar commands
-clear all, close all, addpath('./src');
+clear all, close all; addpath( [ pwd '/src'] );
 
 
 % ==============================================================================
 % ==========               example generation tests              ===============
-
-% flag for setting output:
-%   1 generate test without solution | 2 generate pdf with solutions
-outputFlag = 1 ; 
 
 % data structures for test information
 testStrings = struct() ;
 paramRanges = struct() ;
 
 % set strings
-testStrings.csvActa = ...
-  './example_Folders/listStudentsFolder/ejemploActaUdelaR.csv'  ;
-testStrings.testFolder = ...
-  './carpetasEjemplo/carpetaLetraBaseEjemplo'                   ;
-testStrings.testLabel = ...
-  'PruebaEjemplo'                                               ;
+testStrings.csvActa    = './example_Folders/listStudentsFolder/ejemploActaUdelaR.csv' ;
+testStrings.testFolder = './example_Folders/texFilesFolder'                           ;
+testStrings.testLabel  = 'SimulacroR2'                                                ;
 
-paramRanges.names  = {'ejUnoLargo','ejUnoArea'} ;
-paramRanges.iniVal = {          1 ,        0.1 } ;
-paramRanges.endVal = {          2 ,        0.3 } ;
-paramRanges.deltas = {         .5 ,        0.1 } ;
+paramRanges.names  = { 'ejUnovalorA', 'ejUnovalorP', 'ejUnovalorL', 'ejDosvalorI','ejDosvalorL','ejDosvalorq','ejDosvalorP' } ;
+paramRanges.iniVal = {            1 , 1, 1, 1,1, 1, 1 } ;
+paramRanges.endVal = {           4  , 4, 4,4, 4, 4, 4 } ;
+paramRanges.deltas = {           .5 ,        0.1,0.1,.5 ,        0.1 ,.5 ,        0.1  } ;
 
-% 
-%~ geLePru( outputFlag, stringsUtiles, rangosParametros ) 
+outputPath = './example_generatedExams/' ;
+
+generateExams( testStrings, paramRanges, outputPath ) ;
+ 
