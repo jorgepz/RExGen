@@ -30,9 +30,14 @@ function writeParamsFile( paramRanges, nameLabel, surnameLabel, id, fplanillaVal
   for i=1:nParams
   
     % choose value
-    valsSet = ( paramRanges.iniVal{i} : paramRanges.deltas{i} : paramRanges.endVal{i} )' ;
-    
-    chosenVal = valsSet( randi( length( valsSet ) ) ) ;
+    if paramRanges.endVal{i} > paramRanges.iniVal{i}
+      valsSet = ( paramRanges.iniVal{i} : paramRanges.deltas{i} : paramRanges.endVal{i} )';
+      chosenVal = valsSet( randi( length( valsSet ) ) ) ;
+    elseif paramRanges.endVal{i} == paramRanges.iniVal{i}
+      chosenVal = paramRanges.endVal{i} ;
+    else
+      error(' end value must be greater than ini value');
+    end
 
     % writes chosen value to output text file
     fprintf( fplanillaVals, ',%g', chosenVal );
