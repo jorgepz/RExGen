@@ -68,6 +68,13 @@ function generateExams( testStrings, paramRanges, outputFolder )
   
   % genera letras
   fprintf( [ ' Starting Exam files generation: \n'] ) ;
+
+  fprintf( fplanillaVals, '#' ) ;
+  for i = 1:size( paramRanges.names, 2 )
+    fprintf( fplanillaVals, ',%s', paramRanges.names{1,i} ) ;
+  end
+  fprintf( fplanillaVals, '\n' ) ;
+
   
   for i=1:nLetras
   
