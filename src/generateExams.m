@@ -17,29 +17,55 @@
 
 function generateExams( testStrings, paramRanges, outputFolder )
 
-  % extract strings
-  csvActa    = testStrings.csvActa    ;
-  testFolder = testStrings.testFolder ;
-  testLabel  = testStrings.testLabel  ;
-
+  % extract strings and param
+  csvActa     = testStrings.csvActa     ;
+  testFolder  = testStrings.testFolder  ;
+  testLabel   = testStrings.testLabel   ;
+  numNotList  = testStrings.numNotList  ;
+ 
+  IDs = {} ; surnames = {} ; names = {} ;
+ 
   % --- reads students list ---
-  fid       = fopen( csvActa, 'r') ;
-    aux       = fgetl(fid);   aux = fgetl(fid); aux = fgetl(fid); 
-    aux       = textscan(fid,'%s,%s,%s,%s,%s,,\n','Delimiter',',') ;
-    
-    % stores students personal data
-    IDs       = aux{1,2} ; surnames = aux{1,3} ; names   = aux{1,4} ;
-  fclose(fid);
+  if ~isempty( csvActa )
+    fid       = fopen( csvActa, 'r') ;
+      aux       = fgetl(fid);   aux = fgetl(fid); aux = fgetl(fid); 
+      aux       = textscan(fid,'%s,%s,%s,%s,%s,,\n','Delimiter',',') ;
+      
+      % stores students personal data
+      IDs       = aux{1,2} ; surnames = aux{1,3} ; names   = aux{1,4} ;
+    fclose(fid);
+  end
   % ---------------------------
-  
-  fplanillaVals = fopen( [ outputFolder 'generatedParams.csv'],'w' );
 
-  currFolder = cd(testFolder) ;
+  if numNotList > 0
+    for i = 1 : numNotList
+      numAct = size(IDs,1) ;
+      IDs{numAct+1,1} = '-'; surnames{ numAct+1,1} = 'Not in list'; names{numAct+1,1} = '';
+    end
+  end
+
+  if exist( outputFolder ) == 7 % out
+    fprintf( ['  - Removing output directory.\n'] ) ;
+    confirm_recursive_rmdir(0)
+    % delete
+    [aux, msg] = rmdir( outputFolder ,'s') ;
   
+    % create empty
+    mkdir( outputFolder );
+
+  else
+    fprintf( ['  - Creating output directory.\n'] ) ;
+    mkdir( outputFolder );
+  end
+
+  fplanillaVals = fopen( [ outputFolder 'generatedParams.csv'],'w' ) ;
+
+  currFolder = cd( testFolder ) ;
+
   if exist( 'nLetras' ) == 0 || nLetras > length( surnames )
     nLetras = length( surnames ) ;
   end
-    
+  
   % genera letras
   fprintf( [ ' Starting Exam files generation: \n'] ) ;
   
@@ -54,7 +80,6 @@ function generateExams( testStrings, paramRanges, outputFolder )
     testFilename = sprintf( '%s_%03i_%s.pdf', testLabel, i, surnameLabel ) ;
     % ------------------
 
-        
     % --- writes parameters file ---
     fprintf( fplanillaVals, '%03i', i );
     writeParamsFile( paramRanges, nameLabel, surnameLabel, IDs{i,1}, fplanillaVals ) ;

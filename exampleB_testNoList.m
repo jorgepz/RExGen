@@ -27,16 +27,18 @@ testStrings = struct() ;
 paramRanges = struct() ;
 
 % set strings
-testStrings.csvActa    = './example_Folders/listStudentsFolder/ejemploActaUdelaR.csv' ;
-testStrings.testFolder = './example_Folders/texFilesFolder'                           ;
-testStrings.testLabel  = 'SimulacroR2'                                                ;
+testStrings.csvActa     = '' ;
+testStrings.testFolder  = './example_Folders/texFilesFolder'                           ;
+testStrings.testLabel   = 'SimulacroR2'                                                ;
+testStrings.numNotList  = 4                                                            ;
 
 paramRanges.names  = { 'ejUnovalorA', 'ejUnovalorP', 'ejUnovalorL', 'ejDosvalorI','ejDosvalorL','ejDosvalorq','ejDosvalorP' } ;
 paramRanges.iniVal = {            1 , 1, 1, 1,1, 1, 1 } ;
 paramRanges.endVal = {           4  , 4, 4,4, 4, 4, 4 } ;
 paramRanges.deltas = {           .5 ,        0.1,0.1,.5 ,        0.1 ,.5 ,        0.1  } ;
 
-outputPath = './example_generatedExams/' ;
+% relative path to output folder
+outputPath = [ './example_B_generatedExams/' ] ;
 
 generateExams( testStrings, paramRanges, outputPath ) ;
  
