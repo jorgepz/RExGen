@@ -24,5 +24,10 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      - uses: joergbrech/moxunit-action@master
-
+      - uses: joergbrech/moxunit-action@master 
+        with:
+          tests: tests my_extra_testfile.m
+          src: src thirdparty util
+          with_coverage: true
+          doc_tests: true
+          cover_xml_file: coverage.xml
