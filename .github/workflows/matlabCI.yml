@@ -27,8 +27,6 @@ jobs:
       - name: Download and extract test data 
         env:
           GITHUB_WORKSPACE: ${{github.workspace}}
-        run: |
-          sh downloadTestData.sh
       - uses: joergbrech/moxunit-action@master 
         with:
           tests: tests my_extra_testfile.m
