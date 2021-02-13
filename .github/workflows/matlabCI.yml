@@ -24,9 +24,6 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      - name: Download and extract test data 
-        env:
-          GITHUB_WORKSPACE: ${{github.workspace}}
       - uses: joergbrech/moxunit-action@master 
         with:
           tests: tests my_extra_testfile.m
