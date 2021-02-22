@@ -24,23 +24,26 @@ function generateExams( testStrings, paramRanges, outputFolder )
   numNotList  = testStrings.numNotList  ;
  
   IDs = {} ; surnames = {} ; names = {} ;
- 
+  numStudent = 0 ;
+  
   % --- reads students list ---
   if ~isempty( csvActa )
     fid       = fopen( csvActa, 'r') ;
-      aux       = fgetl(fid);   aux = fgetl(fid); aux = fgetl(fid); 
-      aux       = textscan(fid,'%s,%s,%s,%s,%s,,\n','Delimiter',',') ;
-      
+    aux       = fgetl(fid);   aux = fgetl(fid); aux = fgetl(fid); 
+    
+    while ~feof(fid)
+      numStudent += 1 ;
+      aux       = textscan( fgetl( fid ), '%s', 'Delimiter', ',' ){1} ;
       % stores students personal data
-      IDs       = aux{1,2} ; surnames = aux{1,3} ; names   = aux{1,4} ;
+      IDs{numStudent} = aux{2,1} ; surnames{numStudent} = aux{3,1} ; names{numStudent} = aux{4} ;
+    end
     fclose(fid);
   end
   % ---------------------------
 
   if numNotList > 0
     for i = 1 : numNotList
-      numAct = size(IDs,1) ;
-      IDs{numAct+1,1} = '-'; surnames{ numAct+1,1} = 'Not in list'; names{numAct+1,1} = '';
+      IDs{numStudent+i} = '-'; surnames{ numStudent+i} = 'Not in list'; names{numStudent+i} = '';
     end
   end
 
@@ -79,8 +82,8 @@ function generateExams( testStrings, paramRanges, outputFolder )
   for i=1:nLetras
   
     % etiquetas auxiliares
-    surnameLabel = strrep( strrep( surnames{i,1} , " ", "-" ),"'","-" ) ;
-    nameLabel    = strrep( strrep( names{i,1}    , " ", "-" ),"'","-" ) ;
+    surnameLabel = strrep( strrep( surnames{i} , " ", "-" ),"'","-" ) ;
+    nameLabel    = strrep( strrep( names{i}    , " ", "-" ),"'","-" ) ;
 
     fprintf( sprintf( '  %3i - %s ', i, surnameLabel ) ) ;
     
@@ -89,7 +92,7 @@ function generateExams( testStrings, paramRanges, outputFolder )
 
     % --- writes parameters file ---
     fprintf( fplanillaVals, '%03i', i );
-    writeParamsFile( paramRanges, nameLabel, surnameLabel, IDs{i,1}, fplanillaVals ) ;
+    writeParamsFile( paramRanges, nameLabel, surnameLabel, IDs{i}, fplanillaVals ) ;
     fprintf( fplanillaVals, '\n' );
     % ----------------------------
 
